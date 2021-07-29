@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- File: result.xhtml -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+    <style>
+        body {
+            background-color: darkgrey;
+        }
+    </style>
+    <div class="card">
+        <p:linkButton outcome="book" value="Kitap Oluştur" style="margin-bottom:20px;"/>
+    </div>
+
+
+    <!--    <p:dataTable value="#{bookList.booksAvailable}" var="book" type="ordered">-->
+    <!--        <f:facet name="header">-->
+    <!--            Book List-->
+    <!--        </f:facet>-->
+    <!--        #{book.bookTitle}-->
+    <!--        <h:outputText value=" ("/>-->
+    <!--        <p:link value="Edit" outcome="edit">-->
+    <!--            <f:param name="bookId" value="#{book.bookId}"/>-->
+    <!--        </p:link>-->
+    <!--        <h:outputText value=" | "/>-->
+    <!--        <p:link value="Delete" outcome="delete">-->
+    <!--            <f:param name="bookId" value="#{book.bookId}"/>-->
+    <!--        </p:link>-->
+    <!--        <h:outputText value=")"/>-->
+    <!--    </p:dataTable>-->
+
+    <p:dataTable lazy="true" var="book" value="#{bookList.booksAvailable}" id="bookTable" selectionMode="single" rows="5" selection="#{bookBean.selectedBook}" rowKey="#{book.bookId}"
+                 paginator="true" sortMode="single" allowUnsorting="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 currentPageReportTemplate="{totalRecords} kayıttan {startRecord}-{endRecord} arası"
+                 rowsPerPageTemplate="5,10,{ShowAll|'Bütün Kayıtlar'}"
+    >
+
+        <f:facet name="header">
+            Kitap Listesi
+        </f:facet>
+        #{book.bookTitle}
+
+        <p:column sortBy="#{book.bookId}" sortOrder="asc" headerText="Kitap Numarası">
+            <h:outputText value="#{book.bookId}" />
+        </p:column>
+
+        <p:column headerText="Kitap Başlık">
+            <h:outputText value="#{book.bookTitle}" />
+        </p:column>
+
+        <p:column headerText="Yazar">
+            <h:outputText value="#{book.bookAuthor}" />
+        </p:column>
+
+        <p:column headerText="Fiyat">
+            <h:outputText value="#{book.price}" />
+        </p:column>
+
+        <p:column headerText="Adet">
+            <h:outputText value="#{book.quantity}" />
+        </p:column>
+
+        <p:column>
+            <p:linkButton value="Düzenle" outcome="edit">
+                <f:param name="bookId" value="#{book.bookId}"/>
+            </p:linkButton>
+            <p:linkButton value="Sil" outcome="delete">
+                <f:param name="bookId" value="#{book.bookId}"/>
+            </p:linkButton>
+        </p:column>
+
+        <!--            <p:commandButton update=":form:bookDetail" oncomplete="PF('bookDialog').show()"-->
+        <!--                             icon="pi pi-search" title="View" action="#{bookBean.addSelectedBook(bookBean.selectedBook)}">-->
+        <!--            </p:commandButton>-->
+        <f:facet name="footer">
+            <p:commandButton process="bookTable" update="bookDetail" icon="pi pi-search"
+                             value="Görüntüle"
+                             oncomplete="PF('bookDialog').show()" action="#{bookBean.addSelectedBook(bookBean.selectedBook)}"/>
+        </f:facet>
+
+    </p:dataTable>
+
+    <p:dialog header="Kitap Detayı" widgetVar="bookDialog" modal="true" showEffect="fade"
+              hideEffect="fade" resizable="false">
+        <p:outputPanel id="bookDetail" style="text-align:center;">
+            <p:column>
+                <div>
+                    <div style="margin-bottom: 0">
+                        <div>
+                            <div>
+                                <span>#{bookBean.selectedBook.bookTitle}</span>
+                            </div>
+                        </div>
+                        <div>#{bookBean.selectedBook.bookTitle} asdasdasd</div>
+                        <div>#{bookBean.selectedBook.bookAuthor}</div>
+
+                    </div>
+                </div>
+
+            </p:column>
+        </p:outputPanel>
+    </p:dialog>
+</h:body>
+</html>

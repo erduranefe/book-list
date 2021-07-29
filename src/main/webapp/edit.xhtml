@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- File: edit.xhtml -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+    <h:form>
+        <p:panel header="Kitabı Güncelle">
+            <p:panelGrid columns="1" layout="grid">
+                <p:outputLabel for="book-title" value="Kitap İsmi Giriniz"/>
+                <p:inputText id="book-title" value='#{bookBean.bookTitle}'/>
+                <p:outputLabel for="book-author" value="Yazar Giriniz"/>
+                <p:inputText id="book-author" value='#{bookBean.bookAuthor}'/>
+                <p:outputLabel for="book-price" value="Fiyat Giriniz"/>
+                <p:inputNumber id="book-price" value='#{bookBean.price}' />
+                <p:outputLabel for="book-quantity" value="Adet"/>
+                <p:inputNumber id="book-quantity" value='#{bookBean.quantity}' />
+                <p:commandButton value="Güncelle" action="#{bookBean.update}" ajax="false"/>
+            </p:panelGrid>
+            <input type="hidden" name="bookId" value='#{param.bookId}'/>
+        </p:panel>
+    </h:form>
+</h:body>
+</html>
